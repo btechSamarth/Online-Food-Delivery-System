@@ -175,7 +175,7 @@ class UserController:
                 self.order_service.service_add_order_item(order_ids[rest_id] , item.food_name , item.quantity , item.price)
             total_price += item.price
 
-        total_price = total_price - discount + delivery_charge
+        total_price = max(0 , total_price - discount) + delivery_charge
         return total_price
 
 

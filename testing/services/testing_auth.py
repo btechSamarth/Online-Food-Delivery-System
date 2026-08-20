@@ -1,8 +1,6 @@
 from unittest import TestCase
-from unittest.mock import Mock , patch
-import builtins
+from unittest.mock import Mock
 from controller.control_auth import AuthService
-from database.db_initialize import Database
 from models.models_user import User
 
 class Testing(TestCase):

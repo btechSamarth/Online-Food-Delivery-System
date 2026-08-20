@@ -17,6 +17,7 @@ def main():
     except KeyboardInterrupt:
         return
     finally:
+        db.connection.close()
         print("                                                                              Missing You Already!")
 
     

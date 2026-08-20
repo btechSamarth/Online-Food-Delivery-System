@@ -98,9 +98,11 @@ class OrderService:
                                 if(status != order.status):
                                     print(status , end="-->")
                                 else:
-                                    print(status , end = "")
+                                    print(status , end = "\n")
                                     break
-                            print("\n")
+                         
+                    print(f"Address: {order.addr}")
+                    print("\n")
     
                 if flag:
                     print("No Current Order")

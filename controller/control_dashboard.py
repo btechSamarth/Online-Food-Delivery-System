@@ -50,7 +50,7 @@ class DashboardController:
             elif(self.user.role == "OWNER"):
 
                 control = OwnerController(self.user , self.db)
-                str = "1)Add Your Restaurant\n2)Fetch Your Restaurant Detailes\n3)Add Menu Items\n4)To View Your Menu\n5)To View All Orders\n6)To Update Order Status\n7)To View Order History\n8)To Exit\n\n---->"
+                str = "\n1)Add Your Restaurant\n2)Fetch Your Restaurant Detailes\n3)Add Menu Items\n4)To View Your Menu\n5)To View All Orders\n6)To Update Order Status\n7)To View Order History\n8)To Exit\n\n---->"
                 owner_dict = {
                     1 : control.add_restaurant,
                     2 : control.get_restaurant,
@@ -75,7 +75,7 @@ class DashboardController:
                     action()
             else:
                 control = AdminController(self.user , self.db)
-                str = "1)To Add Discount Coupons\n2)To Remove Discount Coupons\n3)To View All Coupons\n4)To Exit\n\n---->"
+                str = "\n1)To Add Discount Coupons\n2)To Remove Discount Coupons\n3)To View All Coupons\n4)To Exit\n\n---->"
                 admin_dict = {
                     1 : control.add_coupon,
                     2 : control.delete_coupon,
