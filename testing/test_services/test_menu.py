@@ -48,7 +48,7 @@ class TestingMenu(TestCase):
         ])
 
     def test_view_menu_with_food(self):
-        foods = [(1 , 7 , "Pizza" , "Cheesy" , 200 , "MAIN COURSE")]
+        foods = [(1 , "Pizza" , "Cheesy" , 200 , "MAIN COURSE")]
         self.db.fetch_all_items.side_effect = [False , foods , False , False]
         result = self.menu.services_view_menu(7)
         self.assertTrue(result)

@@ -42,7 +42,7 @@ class TestingCoupons(TestCase):
 
     @patch("builtins.input")
     def test_view_coupon_pagination_then_stop(self, mock_input):
-        coupons = [(1, "SAVE10", 10)]
+        coupons = [("SAVE10", 10)]
         self.db.fetch_all_items.side_effect = [coupons, None]
         mock_input.return_value = "Y"
         result = self.coupon.service_view_coupon()
@@ -57,7 +57,7 @@ class TestingCoupons(TestCase):
 
     @patch("builtins.input")
     def test_view_coupon_user_stops(self, mock_input):
-        coupons = [(1, "SAVE10", 10)]
+        coupons = [("SAVE10", 10)]
         self.db.fetch_all_items.return_value = coupons
         mock_input.return_value = "N"
         result = self.coupon.service_view_coupon()
@@ -74,7 +74,7 @@ class TestingCoupons(TestCase):
         self.db.fetch_item.assert_called_once_with(query.VERIFY_COUPON , "SAVE10")
 
     def test_verify_coupon_valid(self):
-        self.db.fetch_item.return_value = (1 , "SAVE10" , 10)
+        self.db.fetch_item.return_value = ("SAVE10" , 10)
         result = self.coupon.service_verify_coupon("SAVE10")
         self.assertIsNotNone(result)
         self.db.fetch_item.assert_called_once_with(query.VERIFY_COUPON , "SAVE10")

@@ -11,7 +11,7 @@ class TestingOrders(TestCase):
         self.order = OrderService(self.db)
 
     def test_create_order(self):
-        args = (2 , 3 , 500 , "PLACED")
+        args = (2 , 3 , 4 , 5 , "platinum" , "21:54" , "PLACED")
         result = self.order.service_create_order(*args)
         self.assertTrue(result)
         self.db.add_item.assert_called_once_with(query.CREATE_ORDER , *args)
@@ -37,7 +37,8 @@ class TestingOrders(TestCase):
         )
 
     def test_view_single_order_customer_found(self):
-        data = (1 , 2 , 3 , 500 , "PLACED" , "123 St")
+        # Order(order_id, cust_id, rest_id, bill_id, addr, created_at, status)
+        data = (1 , 2 , 3 , 500 , "123 St" , "12:00" , "PLACED")
         self.db.fetch_item.return_value = data
         result = self.order.service_view_single_order("customer" , 1 , 2)
         self.assertIsNotNone(result)
@@ -71,6 +72,7 @@ class TestingOrders(TestCase):
 
     def test_view_orders_customer_none(self):
         self.db.fetch_all_items.return_value = False
+        # decorator wrapper signature is (self, Id, role) -> fixed argument order
         result = self.order.service_view_orders(2 , "customer")
         self.assertIsNone(result)
         self.db.fetch_all_items.assert_called_once_with(
@@ -86,7 +88,8 @@ class TestingOrders(TestCase):
         )
 
     def test_view_orders_all_delivered_returns_none(self):
-        orders = [(1 , 2 , 3 , 500 , "DELIVERED" , "123 St")]
+        # Order(order_id, cust_id, rest_id, bill_id, addr, created_at, status)
+        orders = [(1 , 2 , 3 , 500 , "123 St" , "12:00" , "DELIVERED")]
         self.db.fetch_all_items.return_value = orders
         result = self.order.service_view_orders(2 , "customer")
         self.assertIsNone(result)
@@ -103,8 +106,10 @@ class TestingOrders(TestCase):
         )
 
     def test_view_order_history_no_delivered_returns_none(self):
-        orders = [(1 , 2 , 3 , 500 , "PLACED" , "123 St")]
+        # Order(order_id, cust_id, rest_id, bill_id, addr, created_at, status)
+        orders = [(1 , 2 , 3 , 500 , "123 St" , "12:00" , "PLACED")]
         self.db.fetch_all_items.return_value = orders
+        # decorator wrapper signature is (self, Id, role) -> fixed argument order
         result = self.order.service_view_order_history(2 , "customer")
         self.assertIsNone(result)
         self.db.fetch_all_items.assert_called_once_with(
