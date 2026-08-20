@@ -25,16 +25,12 @@ class TestingMenu(TestCase):
     def test_add_food_already_present(self):
         self.db.add_item.return_value = False
         self.menu.services_add_food(7 , "Pizza" , "Cheesy" , 200 , "MAIN COURSE")
-        self.db.add_item.assert_called_once_with(
-            query.ADD_DISH , 7 , "Pizza" , "Cheesy" , 200 , "MAIN COURSE"
-        )
+        self.db.add_item.assert_called_once_with(query.ADD_DISH , 7 , "Pizza" , "Cheesy" , 200 , "MAIN COURSE")
 
     def test_add_food_success(self):
         self.db.add_item.return_value = True
         self.menu.services_add_food(7 , "Pizza" , "Cheesy" , 200 , "MAIN COURSE")
-        self.db.add_item.assert_called_once_with(
-            query.ADD_DISH , 7 , "Pizza" , "Cheesy" , 200 , "MAIN COURSE"
-        )
+        self.db.add_item.assert_called_once_with(query.ADD_DISH , 7 , "Pizza" , "Cheesy" , 200 , "MAIN COURSE")
 
     def test_view_menu_no_food(self):
         self.db.fetch_all_items.return_value = False
@@ -58,24 +54,16 @@ class TestingMenu(TestCase):
         self.db.fetch_item.return_value = None
         result = self.menu.service_get_food_id_by_name("Pizza" , 7)
         self.assertEqual(result , (None , None))
-        self.db.fetch_item.assert_called_once_with(
-            query.GET_FOOD_BY_MENU_ID , "Pizza" , 7
-        )
+        self.db.fetch_item.assert_called_once_with(query.GET_FOOD_BY_MENU_ID , "Pizza" , 7)
 
     def test_get_food_id_by_name_found(self):
         self.db.fetch_item.return_value = (12 , 200)
         result = self.menu.service_get_food_id_by_name("Pizza" , 7)
         self.assertEqual(result , (12 , 200))
-        self.db.fetch_item.assert_called_once_with(
-            query.GET_FOOD_BY_MENU_ID , "Pizza" , 7
-        )
+        self.db.fetch_item.assert_called_once_with(query.GET_FOOD_BY_MENU_ID , "Pizza" , 7)
 
     def test_get_food_id_by_rest_name(self):
-        self.db.fetch_item.side_effect = [
-            (3 ,) ,
-            (7 ,) ,
-            (12 , 200) ,
-        ]
+        self.db.fetch_item.side_effect = [(3 ,) ,(7 ,) ,(12 , 200) ,]
         result = self.menu.service_get_food_id_by_rest_name("Dominos" , "Pizza")
         self.assertEqual(result , (12 , 200))
         self.db.fetch_item.assert_has_calls([

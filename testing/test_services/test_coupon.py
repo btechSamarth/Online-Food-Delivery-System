@@ -47,13 +47,8 @@ class TestingCoupons(TestCase):
         mock_input.return_value = "Y"
         result = self.coupon.service_view_coupon()
         self.assertIsNone(result)
-        mock_input.assert_called_with(
-            "View More? (Y/N)\n----->"
-        )
-        self.db.fetch_all_items.assert_has_calls([
-            call(query.VIEW_COUPON, 10, 0),
-            call(query.VIEW_COUPON, 10, 10)
-        ])
+        mock_input.assert_called_with("View More? (Y/N)\n----->")
+        self.db.fetch_all_items.assert_has_calls([call(query.VIEW_COUPON, 10, 0),call(query.VIEW_COUPON, 10, 10)])
 
     @patch("builtins.input")
     def test_view_coupon_user_stops(self, mock_input):
@@ -62,9 +57,7 @@ class TestingCoupons(TestCase):
         mock_input.return_value = "N"
         result = self.coupon.service_view_coupon()
         self.assertIsNone(result)
-        mock_input.assert_called_once_with(
-            "View More? (Y/N)\n----->"
-        )
+        mock_input.assert_called_once_with("View More? (Y/N)\n----->")
         self.db.fetch_all_items.assert_called_once_with(query.VIEW_COUPON , 10 , 0)
 
     def test_verify_coupon_invalid(self):
